@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body{
+      background-color: antiquewhite;
+  }
+  header{
+    background-color: burlywood;
+    text-align: center;
+  }
+  main{
+      background-color: burlywood;
+  }
+form div{
+    max-width: 500px;
+
+    border:thin;
+    padding: 20px;
+}
+
+footer{
+    background-color: burlywood;
+}
+  
+@media only screen and (min-width: 600px){
+
+}
+
+@media only screen and (min-width: 1024px){
+    main{
+        max-width: 1300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    form div{
+        display: inline-block;
+    }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--snake wolf (hint: snake is not snake)-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Find movie!</h1>
+    </header>
+    <main>
+        <form>
+            <div> <!-- Find movie by title (partial or whole) -->
+                <h3>Find by title</h3>
+                <input type="text" id="titleIp">
+                <button id="tBtn">Search</button>
+            </div> 
+            <div> <!-- Find movie by title AND year (title is still partial or whole) -->
+                <h3>Find by Title and year</h3>
+                <input type="text" title="Title" id="tyTitleIp">
+                <input type="number" title="Year" id="tyYearIp">
+                <button id="tyBtn">Search</button>
+            </div>
+            <div> <!-- Find movie by name (actor, producer, ect.) -->
+                <h3>Find by the name of an included actor, director, producer etc.</h3>
+                <input type="text" id="nameIp">
+                <button id="nBtn">Search</button>
+            </div>
+        </form>
+        <section>
+            <table> <!--Movie search results-->
+                <thead>
+                    <tr> <!--top bar titles-->
+                        <tr></tr> <!--Title-->
+                        <tr></tr> <!--Relase year-->
+                        <tr></tr> <!--Language-->
+                    </tr>
+                </thead>
+                <tbody></tbody> <!--lower bar info-->
+            </table>
+            <table> <!--person search results-->
+                <thead>
+                    <tr> <!--top bar-->
+                        <tr></tr> <!--Name-->
+                        <tr></tr> <!--Main activity-->
+                    </tr>
+                </thead>
+                <tbody></tbody> <!--lower bar info-->
+            </table>
+        </section>
+
+        <div id="modal"> <!--Modal, Shows up when clicking on a table search element-->
+            <table>
+                <thead>
+                    <tr> <!--top bar titles-->
+                        <tr></tr> <!--Title-->
+                        <tr></tr> <!--Relase year-->
+                        <tr></tr> <!--Language-->
+                    </tr>
+                </thead>
+                <tbody></tbody> <!--lower bar info-->
+            </table>
+        </div>
+        
+        
+        
+    </main>
+    <footer>&copy;KEA <sub> <sub>notKEA</sub> </sub> </footer>
+    <script src="JS/node_modules/jquery/dist/jquery.js"></script>
+    <script src="JS/Script.js"></script>
+</body>
+
+</html>
