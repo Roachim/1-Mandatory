@@ -2,6 +2,20 @@
 <html lang="en">
 <head>
     <!--snake wolf (hint: snake is not snake)-->
+<!-- 
+    # API-KEY(V3 auth) :                b6bbfc9585c14f4716f56c5f385d23f9
+    # Exampel API request :             https://api.themoviedb.org/3/movie/550?api_key=b6bbfc9585c14f4716f56c5f385d23f9
+    # API Read Access Token (V4 auth) : eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNmJiZmM5NTg1YzE0ZjQ3MTZmNTZjNWYzODVkMjNmOSIsInN1YiI6IjYxNGRmNDg0YjA0NjA1MDAyODViYTZmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eVm1PCMbLXdsQLO6e9j4w5GToGZ3PttosGOZ8-10o2o
+    
+    # Other example                   : https://api.themoviedb.org/3/movie/76341?api_key=b6bbfc9585c14f4716f56c5f385d23f9
+    # Get Movie by Id                 : https://api.themoviedb.org/3/keyword/{Keyword-Id}/movies?api_key=b6bbfc9585c14f4716f56c5f385d23f9&language=en-US&include_adult=false
+    # Get Movie by Id                 : https://api.themoviedb.org/3/search/movie?api_key=b6bbfc9585c14f4716f56c5f385d23f9&query=<keyword>
+-->
+
+
+
+
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,38 +46,61 @@
             </div>
         </form>
         <section>
-            <table> <!--Movie search results-->
+            <table class="movieR" > <!--Movie search results-->
                 <thead>
                     <tr> <!--top bar titles-->
-                        <tr></tr> <!--Title-->
-                        <tr></tr> <!--Relase year-->
-                        <tr></tr> <!--Language-->
+                        <th></th> <!--Title-->
+                        <th></th> <!--Relase year-->
+                        <th></th> <!--Language-->
                     </tr>
                 </thead>
-                <tbody></tbody> <!--lower bar info-->
+                <tbody id="movie-result"></tbody> <!--lower bar info-->
             </table>
-            <table> <!--person search results-->
+            <table class="personR" > <!--person search results-->
                 <thead>
                     <tr> <!--top bar-->
-                        <tr></tr> <!--Name-->
-                        <tr></tr> <!--Main activity-->
+                        <th></th> <!--Name-->
+                        <th></th> <!--Main activity-->
                     </tr>
                 </thead>
-                <tbody></tbody> <!--lower bar info-->
+                <tbody id="person-result"></tbody> <!--lower bar info-->
             </table>
         </section>
 
-        <div id="modal"> <!--Modal, Shows up when clicking on a table search element-->
-            <table>
-                <thead>
-                    <tr> <!--top bar titles-->
-                        <tr></tr> <!--Title-->
-                        <tr></tr> <!--Relase year-->
-                        <tr></tr> <!--Language-->
-                    </tr>
-                </thead>
-                <tbody></tbody> <!--lower bar info-->
-            </table>
+        <div id="modal" class="the-modal"> <!--Modal, Shows up when clicking on a table search element-->
+            <div class="modal-content">
+                <table id="addMovieContent"> <!--modal info for movies-->
+                    <h4></h4>
+                    <p></p>
+                    <h4></h4>
+                    <ul></ul>
+                    <h4></h4>
+                    <ul></ul>
+                    <h4></h4>
+                    <ul>
+                        <ul></ul>
+                    </ul>
+                    <h4></h4>
+                    <ul></ul>
+                    <h4></h4>
+                    <ul></ul>
+                    <h4></h4>
+                    <ul></ul>
+                    <h4></h4>
+                    <ul></ul>
+                    <h4></h4>
+                    <ul></ul>
+                </table>
+                <table id="addPersonContent">
+                    <h4></h4>
+                    <p></p>
+                    <h4></h4>
+                    <ul>
+                        <ul></ul>
+                    </ul>
+                </table>
+            </div>
+            
         </div>
         
         
