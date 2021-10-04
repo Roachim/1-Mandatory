@@ -53,9 +53,8 @@ $(function(){
         });
         
 
-      
-
     });
+
     //Search by movie name AND year ########################################################################
     $("#tyBtn").on("click", function(e){
         e.preventDefault();
@@ -111,13 +110,14 @@ $(function(){
     });
 
     //Search by name of actor, director, etc.###########################################
-    $("#nBtn").on("click", function(){
+    $("#nBtn").on("click", function(e){
+        e.preventDefault();
         alert("Button click");
         var keyword = $("#nameIp").val();
 
         var url = "".concat(base_url + "/search/person" + API_Key +"&query=" + keyword);
 
-        https://api.themoviedb.org/3/search/person?api_key=key&language=en-US&query=PersonName&page=1&include_adult=false
+        
 
         //alert(url);
 
@@ -132,21 +132,23 @@ $(function(){
             $.each(data.results, function(i, item){
                 
 
-                let row = $('<tr></tr>');
+                let row = $('<tr></tr>', { 'id': item.id });
 
                 let cell = $('<td></td>', { 'text': "Name" });
                 row.append(cell);
                 cell = $('<td></td>', { 'text': item.name });
                 row.append(cell);
 
-                let releaseYear = item.release_date.substring(0,4);
-                let cell2 = $('<td></td>', { 'text': 'Release Year' });
-                row.append(cell2);
-                cell2 = $('<td></td>', { 'text': item.known_for_department });
-                row.append(cell2);
+                
+                cell = $('<td></td>', { 'text': 'primary role' });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': item.known_for_department });
+                row.append(cell);
 
 
                 table.append(row);
+
+                ModalInfoPerson(row);
 
             });
         });
@@ -211,7 +213,7 @@ $(function(){
                 });
                 table.append(row);
                 //List of production companies involved in the making of the movie
-                row = $('<tr>Involved Companies</tr>', { 'text': "Production Companies" });
+                row = $('<tr></tr>', { 'text': "Production Companies" });
                 $.each(data.production_companies, function(i, item){
                     cell = $('<td></td>', { 'text': item.name });
                     row.append(cell);
@@ -255,7 +257,7 @@ $(function(){
                let producerRow = $('<tr></tr>', { 'text': "Producers" });
 
                //List of music composers
-               let musicRow = $('<tr>Music Composers</tr>', { 'text': "Music Composers" });
+               let musicRow = $('<tr></tr>', { 'text': "Music Composers" });
 
                 $.each(data.crew, function(i, item){
                     switch(item.job) {
@@ -302,11 +304,10 @@ $(function(){
     var ModalInfoPerson = (function(row){
         row.on("click", function() {
             //"get" using id from row
-            var movieName = this.id;
-            // https://api.themoviedb.org/3/movie/578?api_key=b6bbfc9585c14f4716f56c5f385d23f9 example url
-            var url = "".concat(base_url + "/movie/" + movieName + API_Key );
+            var personId = this.id;
+            // https://api.themoviedb.org/3/person/3132025?api_key=b6bbfc9585c14f4716f56c5f385d23f9 example url
+            var url = "".concat(base_url + "/person/" + personId + API_Key );
 
-            //9 rows :( help help help help help help help help help help help help help help help help()
                 const table = $('#addPersonContent');
 
             $.ajax({
@@ -314,102 +315,100 @@ $(function(){
                 type: 'GET',
             })
             .done(function(data) {
-    
-                //Title, release date, language, runtime, overview, link to the movie’s web page
-                let row = $('<tr>General Info</tr>');
-                let cell = $('<td></td>', { 'text': "Title" });
+
+                // "Name, main activity, birthday, birthplace, day of decease (only if the person is dead), biography, 
+                //     link to the person’s website"
+                let row = $('<tr></tr>', { 'text': "Actor General Info" });
+
+                cell = $('<td></td>', { 'text': "Name" });
                 row.append(cell);
-                cell = $('<td></td>', { 'text': data.original_title });
+                cell = $('<td></td>', { 'text': " : ".concat(data.name) });
                 row.append(cell);
 
-                cell = $('<td></td>', { 'text': "release date" });
+                cell = $('<td></td>', { 'text': "known_for_department" });
                 row.append(cell);
-                cell = $('<td></td>', { 'text': data.release_date });
+                cell = $('<td></td>', { 'text': " : ".concat(data.known_for_department) });
                 row.append(cell);
-
-                cell = $('<td></td>', { 'text': "Language" });
-                row.append(cell);
-                cell = $('<td></td>', { 'text': data.original_language });
-                row.append(cell);
-
-                cell = $('<td></td>', { 'text': "Runtime" });
-                row.append(cell);
-                cell = $('<td></td>', { 'text': data.runtime });
-                row.append(cell);
-
-                cell = $('<td></td>', { 'text': "Overview" });
-                row.append(cell);
-                cell = $('<td></td>', { 'text': data.overview });
-                row.append(cell);
-
-                cell = $('<td></td>', { 'text': "Link to movie web page" });
-                row.append(cell);
-                cell = $('<td></td>', { 'text': data.homepage });
-                row.append(cell);
-
-                table.append(row);
-                //List of genres the movie belongs to
-                row = $('<tr></tr>', { 'text': "genres" });
-                $.each(data.genres, function(i, item){
-                    cell = $('<td></td>', { 'text': item.name });
+                if(data.birthday != null){
+                    cell = $('<td></td>', { 'text': "birthday" });
                     row.append(cell);
-                });
-                table.append(row);
-                //List of production companies involved in the making of the movie
-                row = $('<tr></tr>', { 'text': "Production Companies" });
-                $.each(data.production_companies, function(i, item){
-                    cell = $('<td></td>', { 'text': item.name });
+                    cell = $('<td></td>', { 'text': " : ".concat(data.birthday) });
                     row.append(cell);
-                });
-                table.append(row);
-
-
+                }
                 
-    
+
+                cell = $('<td></td>', { 'text': "Place of Birth" });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': " : ".concat(data.place_of_birth) });
+                row.append(cell);
+
+                cell = $('<td></td>', { 'text': "Deathday" });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': " : ".concat(data.deathday) });
+                row.append(cell);
+
+                cell = $('<td></td>', { 'text': "Biography" });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': " : ".concat(data.biography) });
+                row.append(cell);
+
+                cell = $('<td></td>', { 'text': "Homepage" });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': " : ".concat(data.homepage) });
+                row.append(cell);
+                
+                table.append(row);
     
             });
 
-            //second get call for the cast and crew
-
-            url = "".concat(base_url + "/movie/" +movieName +"/credits"+ API_Key );
+            url = "".concat(base_url + "/person/" + personId + "/movie_credits" + API_Key );
+            //example url: https://api.themoviedb.org/3/person/3132025/movie_credits?api_key=b6bbfc9585c14f4716f56c5f385d23f9
             $.ajax({
                 url: url,
                 type: 'GET',
             })
             .done(function(data) {
-                //List of actors. For each actor, his/her name and the name of their character will be shown
-               let actorRow = $('<tr></tr>', { 'text': "actors" });
+                // List of movies the person has worked in. For each movie, show the title, release year, and the 
+                // role the person performed (e.g., actor, director, script writer…)
+                let row = $('<tr></tr>', { 'text': "Associated Movies" });
+            
                 $.each(data.cast, function(i, item){
-                    cell = $('<td></td>', { 'text': item.name });
-                    actorRow.append(cell);
-                    cell = $('<td></td>', { 'text': "as: ".concat(item.character) });
-                    actorRow.append(cell);
-                });
+                    cell = $('<td></td>', { 'text': "Title" });
+                    row.append(cell);
+                    cell = $('<td></td>', { 'text': " : ".concat(item.title) });
+                    row.append(cell);
 
-                //List of directors
-               let directorRow = $('<tr></tr>', { 'text': "Directors" });
-               
-               //List of script writers
-               let ScriptRow = $('<tr>Script Writers</tr>');
+                    cell = $('<td></td>', { 'text': "Release Date" });
+                    row.append(cell);
+                    cell = $('<td></td>', { 'text': " : ".concat(item.release_date) });
+                    row.append(cell);
 
-               //List of executive producers
-               let ExecutiveRow = $('<tr>Executive Directors</tr>');
+                    cell = $('<td></td>', { 'text': "Role" });
+                    row.append(cell);
+                    cell = $('<td></td>', { 'text': " : Actor" });
+                    row.append(cell);
 
-               //List of producers 
-               let producerRow = $('<tr>Producers</tr>');
-
-               //List of music composers
-               let musicRow = $('<tr>Music Composers</tr>');
-
-                $.each(data.crew, function(i, item){
                     
-                        
                 });
-    
-               
+                table.append(row);
+                $.each(data.crew, function(i, item){
+                    cell = $('<td></td>', { 'text': "Title" });
+                    row.append(cell);
+                    cell = $('<td></td>', { 'text': " : ".concat(item.title) });
+                    row.append(cell);
 
-               
+                    cell = $('<td></td>', { 'text': "release_date" });
+                    row.append(cell);
+                    cell = $('<td></td>', { 'text': " : ".concat(item.release_date) });
+                    row.append(cell);
 
+                    cell = $('<td></td>', { 'text': "Role" });
+                    row.append(cell);
+                    cell = $('<td></td>', { 'text': " : ".concat(item.job) });
+                    row.append(cell);
+                });
+                table.append(row);
+                
             });
 
             //open model
@@ -421,7 +420,7 @@ $(function(){
         if (event.target == modal) {
             $("#modal").css("display", "none");
             
-          }
+        }
     });
     
 });
