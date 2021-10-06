@@ -30,16 +30,18 @@ $(function(){
                 cell = $('<td></td>', { 'text': item.original_title });
                 row.append(cell);
 
-                let releaseYear = item.release_date.substring(0,4);
-                let cell2 = $('<td></td>', { 'text': 'Release Year' });
-                row.append(cell2);
-                cell2 = $('<td></td>', { 'text': releaseYear });
-                row.append(cell2);
+                var releaseYear = item.release_date.substring(0,4);
+                
 
-                let cell3 = $('<td></td>', { 'text': "Language" });
-                row.append(cell3);
-                cell3 = $('<td></td>', { 'text': item.original_language });
-                row.append(cell3);
+                cell = $('<td></td>', { 'text': 'Release Year' });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': releaseYear });
+                row.append(cell);
+
+                cell = $('<td></td>', { 'text': "Language" });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': item.original_language });
+                row.append(cell);
 
                 table.append(row);
                 
@@ -75,7 +77,31 @@ $(function(){
 
             $.each(data.results, function(i, item){
                 let releaseYear = item.release_date.substring(0,4);
-                if(releaseYear =! uReleaseYear){
+                if(releaseYear === uReleaseYear){
+                    let row = $('<tr></tr>', {'id': item.id});
+
+                let cell = $('<td></td>', { 'text': "Title" });
+                row.append(cell);
+                cell = $('<td></td>', { 'text': item.original_title });
+                row.append(cell);
+
+                //let releaseYear = item.release_date.substring(0,4);
+                let cell2 = $('<td></td>', { 'text': 'Release Year' });
+                row.append(cell2);
+                cell2 = $('<td></td>', { 'text': releaseYear });
+                row.append(cell2);
+
+                let cell3 = $('<td></td>', { 'text': "Language" });
+                row.append(cell3);
+                cell3 = $('<td></td>', { 'text': item.original_language });
+                row.append(cell3);
+
+                table.append(row);
+
+                ModalInfo(row);
+                return false;
+                }
+                else{
                     return true;
                 };
 
@@ -103,9 +129,7 @@ $(function(){
 
             });
         })
-        .fail(function(){
-            console.log("Alter not working");
-        });
+        
         
     });
 
